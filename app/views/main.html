@@ -1,9 +1,11 @@
 <div class="hero-unit">
-  <h1>'Allo, 'Allo!</h1>
-  <p>You now have</p>
-  <ul>
-      <li ng-repeat="thing in awesomeThings">{{thing}}</li>
-  </ul>
-  <p>installed.</p>
-  <h3>Enjoy coding! - Yeoman</h3>
+  <h2>Stock</h2>
+  <h4>Get a single stock</h4>
+  <form name="getStocks" ng-submit="getStock()" class="form-horizontal">
+  		<input type="text" ng-model="stock.query" focus/>
+ 		<button class="btn btn-primary">Get Stock</button><br/>
+ 		<h4>You got stock:&nbsp;<span>{{stock.ticker.value}}</span></h4>
+ 		<h4>stock name:&nbsp;<span>{{stock.name.value}}</span></h4>
+ 		<h4>Exchange:&nbsp;<span >{{stock.exchange.value}}</span></h4>
+ 	</form>
 </div>
