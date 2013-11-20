@@ -9,7 +9,12 @@ angular.module('getStockApp', [
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        resolve: {
+          Stock: function (Stock){
+            return Stock;
+          }
+        }
       })
       .otherwise({
         redirectTo: '/'
