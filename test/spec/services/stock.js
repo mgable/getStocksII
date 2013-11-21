@@ -13,15 +13,15 @@ describe('Service: Stock', function () {
     Stock = _Stock_;
   }));
 
-  describe ("queries should return an object", function(){
-      it('should do something', function () {
+  describe ("should echo back the ticker symbol", function(){
+      it('should echo back the ticker symbol', function () {
         var api = 'http://echo.jsontest.com/value/goog?callback=JSON_CALLBACK', results;
 
         mockBackend.expectJSONP(api).respond({
           value: "goog"
         });
 
-        Stock.echoTicker("goog").then(function(response){
+        Stock.getTicker("goog").then(function(response){
           results = response;
         })
 
@@ -29,11 +29,11 @@ describe('Service: Stock', function () {
         expect(results).toEqual("goog");
       });
 
-      it ("should do one more test", function(){
+      it ("should echo back the ticker symbol take two", function(){
 
          mockBackend.expectJSONP("http://echo.jsontest.com/value/goog?callback=JSON_CALLBACK").respond({value: 'goog'});
 
-        var promise = Stock.echoTicker("goog"), results;
+        var promise = Stock.getTicker("goog"), results;
 
         promise.then(function(response){
           results = response;
@@ -44,5 +44,17 @@ describe('Service: Stock', function () {
         expect(results).toEqual("goog");
       })
 
+      it ("should get the name", function (){
+        var results;
+         mockBackend.expectJSONP("http://finance.yahoo.com/webservice/v1/symbols/goog/quote?format=json&callback=JSON_CALLBACK").respond({list: {resources: [{resource: {fields: {name: "Google, Inc"}}} ] } });
+
+         Stock.getName('goog').then(function(response){
+            results = response;
+         })
+
+         mockBackend.flush();
+         expect(results).toEqual("Google, Inc");
+
+      })
   })
 });

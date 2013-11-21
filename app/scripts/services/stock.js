@@ -6,7 +6,11 @@ angular.module('getStockApp')
   		return 'http://echo.jsontest.com/'+ endpoint + '?callback=JSON_CALLBACK';
   	}
 
-  	this.echoTicker = function(symbol){
+    this.echoName = function (endpoint) {
+      return 'http://finance.yahoo.com/webservice/v1/symbols/' + endpoint + '/quote?format=json&callback=JSON_CALLBACK'
+    }
+
+  	this.getTicker = function(symbol){
   		var url = this.echoSymbol("value/" + symbol);
 
   		return $http.jsonp(url).then(function(response){
@@ -14,7 +18,11 @@ angular.module('getStockApp')
   		});
   	}
 
-    // this.getName = function(symbol){
+    this.getName = function(symbol){
+      var url = this.echoName(symbol);
 
-    // }
+      return $http.jsonp(url).then(function(response){
+        return response.data.list.resources[0].resource.fields.name;
+      });
+    }
   });

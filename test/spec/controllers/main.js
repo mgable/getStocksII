@@ -30,9 +30,15 @@ describe('Controller: MainCtrl', function () {
 
     it ("should get a stock", inject(function($q){
 
-      spyOn(Stock, "echoTicker").andCallFake(function(){
+      spyOn(Stock, "getTicker").andCallFake(function(){
         var deferred = $q.defer();
         deferred.resolve("value");
+        return deferred.promise;
+      })
+
+      spyOn(Stock, "getName").andCallFake(function(){
+        var deferred = $q.defer();
+        deferred.resolve("some value");
         return deferred.promise;
       })
 
@@ -40,6 +46,7 @@ describe('Controller: MainCtrl', function () {
 
       scope.$apply();
 
+      expect(scope.stock.name).toEqual("some value");
       expect(scope.stock.ticker).toEqual("value");
     }))
   })
