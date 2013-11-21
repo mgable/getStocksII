@@ -22,7 +22,7 @@ module.exports = function(config) {
 
     // list of files / patterns to exclude
     exclude: [
-      'test/spec/services/stock.js'
+   
     ],
 
     // web server port

@@ -7,7 +7,7 @@ angular.module('getStockApp')
   	}
 
   	this.echoTicker = function(symbol){
-  		var url = this.echoSymbol("value/" +symbol);
+  		var url = this.echoSymbol("value/" + symbol);
 
   		return $http.jsonp(url).then(function(response){
   			return response.data.value
