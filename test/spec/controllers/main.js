@@ -4,19 +4,44 @@ describe('Controller: MainCtrl', function () {
 
   // load the controller's module
   beforeEach(module('getStockApp'));
+  beforeEach(function(){
+    this.addMatchers({
+      toEqualData:function(expected){
+        return angular.equals(this.actual, expected);
+      }
+    });
+  });
 
-  var MainCtrl,
-    scope;
+  var MainCtrl, Stock, scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
+  beforeEach(inject(function ($controller, $rootScope, _Stock_) {
     scope = $rootScope.$new();
+    Stock = _Stock_;
     MainCtrl = $controller('MainCtrl', {
       $scope: scope
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
-  });
+  describe("initialization" , function(){
+    it('should initialize the stock object', function () {
+      expect(scope.stock).toEqualData({ticker: "", price: "", exchange: "", name: "", query: ""});
+    });
+
+    it ("should get a stock", inject(function($q){
+
+      spyOn(Stock, "echoTicker").andCallFake(function(){
+        var deferred = $q.defer();
+        deferred.resolve("value");
+        return deferred.promise;
+      })
+
+      scope.getStock();
+
+      scope.$apply();
+
+      expect(scope.stock.ticker).toEqual("value");
+    }))
+  })
+  
 });

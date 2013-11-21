@@ -2,7 +2,6 @@
 
 angular.module('getStockApp', [
   'ngResource',
-  'ngSanitize',
   'ngRoute'
 ])
   .config(function ($routeProvider) {
