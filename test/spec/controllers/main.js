@@ -42,12 +42,19 @@ describe('Controller: MainCtrl', function () {
         return deferred.promise;
       })
 
+      spyOn(Stock, "getExchange").andCallFake(function(){
+        var deferred = $q.defer();
+        deferred.resolve("some other value");
+        return deferred.promise;
+      })
+
       scope.getStock();
 
       scope.$apply();
 
       expect(scope.stock.name).toEqual("some value");
       expect(scope.stock.ticker).toEqual("value");
+      expect(scope.stock.exchange).toEqual("some other value");
     }))
   })
   

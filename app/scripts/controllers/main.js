@@ -10,6 +10,9 @@ angular.module('getStockApp')
    	  		});
    	  		Stock.getName($scope.stock.query).then(function(response){
    	  			$scope.stock.name = response;
-   	  		})
+   	  		});
+          Stock.getExchange($scope.stock.query).then(function(response){
+            $scope.stock.exchange = response;
+          })
    	  	};
   });

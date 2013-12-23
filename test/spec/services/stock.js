@@ -42,7 +42,7 @@ describe('Service: Stock', function () {
         mockBackend.flush();
 
         expect(results).toEqual("goog");
-      })
+      });
 
       it ("should get the name", function (){
         var results;
@@ -50,11 +50,23 @@ describe('Service: Stock', function () {
 
          Stock.getName('goog').then(function(response){
             results = response;
-         })
+         });
 
          mockBackend.flush();
          expect(results).toEqual("Google, Inc");
 
+      });
+
+      it ("should get an exchange", function(){
+        var results;
+        mockBackend.expectJSONP('http://finance.google.com/finance/info?client=ig&callback=JSON_CALLBACK&q=goog').respond([{"e":"NASDAQ"}]);
+     
+         Stock.getExchange('goog').then(function(response){
+            results = response;
+         });
+
+         mockBackend.flush();
+         expect(results).toEqual("NASDAQ");
       })
   })
 });

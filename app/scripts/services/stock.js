@@ -10,6 +10,10 @@ angular.module('getStockApp')
       return 'http://finance.yahoo.com/webservice/v1/symbols/' + endpoint + '/quote?format=json&callback=JSON_CALLBACK'
     }
 
+    this.echoExchange = function(endpoint){
+      return 'http://finance.google.com/finance/info?client=ig&callback=JSON_CALLBACK&q=' + endpoint;
+    }
+
   	this.getTicker = function(symbol){
   		var url = this.echoSymbol("value/" + symbol);
 
@@ -24,5 +28,13 @@ angular.module('getStockApp')
       return $http.jsonp(url).then(function(response){
         return response.data.list.resources[0].resource.fields.name;
       });
+    }
+
+    this.getExchange = function(symbol){
+      var url = this.echoExchange(symbol);
+
+      return $http.jsonp(url).then(function(response){
+        return response.data[0].e;
+      })
     }
   });
